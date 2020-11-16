@@ -1,0 +1,45 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */ 
+    int n;
+    cin>>n;
+    long arr[n];
+    for(int i=0;i<n;i++)
+    {
+       cin>> arr[i];
+        
+    }
+    // unique array
+    int ctr;
+    int k ,j;
+    for(int i=0; i<n; i++)
+    {
+        ctr=0;
+        
+        for( j=0,k=n; j<k+1; j++)
+        {
+            /*Increment the counter when the seaarch value is duplicate.*/
+            if (i!=j)
+            {
+               if(arr[i]==arr[j])
+              {
+                 ctr++;
+               }
+             }
+        }
+       if(ctr==0)
+        {
+          cout<< arr[i]<<" ";
+        }
+    }
+     
+
+    return 0;
+}
