@@ -1,0 +1,35 @@
+#include<stdio.h>
+void dfs(int);
+int e[100][100],n,count[100];
+int main()
+{
+	int i,j;
+	printf("Enter number of vertices\n");
+	scanf("%d",&n);
+	printf("Enter edges\n");
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n;j++)
+		{
+			scanf("%d",&e[i][j]);
+		}
+	}
+	printf("After traversal dfs path is\n");
+	for(i=0;i<n;i++)
+	{
+		count[i]=0;
+	}
+	dfs(0);
+	return 0;
+}
+void dfs(int i)
+{
+	int j;
+	count[i]=1;
+	printf("%d\n",i);
+	for(j=0;j<n;j++)
+	{
+		if(!count[j] && e[i][j]==1)
+		dfs(j);
+	}
+}
