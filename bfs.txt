@@ -1,0 +1,81 @@
+#include<stdio.h>
+void bfs(int);
+void enqueue(int);
+int dequeue();
+int e[100][100],n,count[100];
+int data[100];
+int f=-1;
+int r=-1;
+int main()
+{
+	int i,j;
+	printf("Enter number of vertices\n");
+	scanf("%d",&n);
+	printf("Enter edges\n");
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n;j++)
+		{
+			scanf("%d",&e[i][j]);
+		}
+	}
+	printf("After traversal bfs path is\n");
+	for(i=0;i<n;i++)
+	{
+		count[i]=0;
+	}
+	for(i=0;i<n;i++)
+	{
+		if(count[i]==0)
+		{
+			bfs(i);
+		}
+	}
+	return 0;
+}
+void bfs(int i)
+{
+	int j,p=0,c[50];
+	c[i]++;
+	count[i]=1;
+	enqueue(i);
+	printf("%d\n",i);
+	while(!p)
+	{
+		for(j=0;j<n;j++)
+		{
+			if(!count[j] && e[i][j]==1)
+			{
+				c[j]++;
+				count[j]=1;
+				enqueue(j);
+				printf("%d\n",j);
+			}
+		}
+		p=dequeue();
+	}
+}
+void enqueue(int d)
+{
+	if(r==n-1)
+	printf("Queue overflow\n");
+	else
+	{
+		if(f==-1)
+		{
+			f++;
+			r++;
+			data[r]=d;
+		}
+	}
+}
+int dequeue()
+{
+	if(f==-1 && f>r)
+	{
+		printf("Queue underflow\n");
+		return 0;
+	}
+	f--;
+	return 1;
+}
