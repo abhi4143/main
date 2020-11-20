@@ -1,0 +1,198 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define size 100
+int ov,stack[size],top=-1,top1=-1,bo,eo,stack1[size],pope;
+struct bucket 
+{
+    int count;
+    int* value;
+};
+ void push(int n1)
+ {
+	 if(top==size)
+	 {
+		 printf("Stack full\n");
+	 }
+	 else
+	 {
+		 stack[top]=n1;
+		 top=top+1;
+	 }
+ }
+ void push1(int z)
+ {
+	 if(top1==size)
+	 {
+		 printf("Stack full\n");
+	 }
+	 else
+	 {
+		 stack1[top1]=z;
+		 top1=top1+1;
+	 }
+ }
+int pop()
+{
+	if(top==-1)
+	{
+		printf("Stack empty\n");
+	}
+	else
+	{
+		int x=stack[top];
+		top=top-1;
+		return x;
+	}
+	return -1;
+}
+int pop1()
+{
+	if(top1==-1)
+	{
+		printf("Stack empty\n");
+	}
+	else
+	{
+		int x;
+		x=stack1[top1];
+		top1=top1-1;
+		return x;
+	}
+	return -1;
+}
+
+void popball(int n1,int n2)
+{
+	if(top==-1)
+	{
+		printf("Stck empty\n");
+	}
+	else
+	{
+		while(top!=-1)
+		{
+			pope=pop();
+			if(pope>=n1 && pope<=n2)
+			{
+				continue;
+			}
+			push1(pope);
+		}
+		while(top1!=-1)
+		{
+			int p;
+			p=pop1();
+			push(p);
+		}
+	}
+	
+}
+			
+	 
+int compareIntegers(const void* first, const void* second)
+{
+    int x = *((int*)first), y =  *((int*)second);
+    if (x == y)
+    {
+        return 0;
+    }
+    else if (x < y)
+    {
+        return -1;
+    }
+    else
+    {
+        return 1;
+    }
+    
+}
+
+ 
+void bucketSort(int array[],int n)
+{
+    struct bucket buckets[3];
+    int i, j, k;
+    for (i = 0; i < 3; i++)
+    {
+        buckets[i].count = 0;
+        buckets[i].value = (int*)malloc(sizeof(int) * n);
+    }
+    
+    for (i = 0; i < n; i++)
+    {
+        if (array[i] < 0)
+        {
+            buckets[0].value[buckets[0].count++] = array[i];
+        }
+        else if (array[i] > 10)
+        {
+            buckets[2].value[buckets[2].count++] = array[i];
+        }
+        else
+        {
+            buckets[1].value[buckets[1].count++] = array[i];
+        }
+    }
+    for (k = 0, i = 0; i < 3; i++)
+    {
+       
+        qsort(buckets[i].value, buckets[i].count, sizeof(int), &compareIntegers);
+        for (j = 0; j < buckets[i].count; j++)
+        {
+            array[k + j] = buckets[i].value[j];
+        }
+        k += buckets[i].count;
+        free(buckets[i].value);
+    }
+}
+ 
+int main() {
+ 
+    int array[100] = {10,7,5,8,15,3};
+    int i = 7,j,k;
+ 
+  
+    
+    for (j = 0; j<i; j++)
+    {
+        stack[j]=array[j];
+        top=top+1;
+    }
+    bucketSort(stack, top); 
+	int choice;
+	printf("1:Push ball\n2:pop ball\n3:Display\n");
+	while(1){
+	printf("Enter your choice");
+	scanf("%d",&choice);
+	
+	switch(choice)
+	{
+		case 1: printf("Enter how many overs ball played\n ");
+				scanf("%d",&ov);
+				push(ov);
+				bucketSort(stack,top);
+				break;
+		case 2: printf("Enter begin over\n");
+				scanf("%d",&bo);
+				printf("Enter end over\n");
+				scanf("%d",&eo);
+				popball(bo,eo);
+				break;
+		case 3: printf("Stack contents\n");
+				bucketSort(stack,top);
+				 for (k =0; k<top; k++)
+				 {
+					 printf("%d ", stack[k]);
+				 }
+				 printf("\n");  
+				break;
+		
+}
+}   
+ 
+ 
+    return 0;
+}
+
+
+ 
